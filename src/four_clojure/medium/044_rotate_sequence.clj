@@ -11,23 +11,22 @@
 ;; Solutions
 ;; -----------------------------------------------------------------------------
 
+#_(High Level:
+        rotate index = 2
+
+        1 2 3 4 5
+
+        5 4 3 2 1
+
+        rev((5,4)) + rev(3 2 1)
+        )
+
 (defn rot_index
   [x n]
   (let [i (mod x n)]
     (if (pos? i)
       (- n i)
       i)))
-
-#_(
-   2
-
-   1 2 3 4 5
-
-   5 4 3 2 1
-
-   rev((5,4)) + rev(3 2 1)
-
-   )
 
 (defn f
   [x coll]
@@ -38,12 +37,11 @@
             (reverse (drop i rcoll)))))
 
 
+;; more concise
 (defn f
   [x coll]
-  (let [collCount (count coll)]
-    (take
-      collCount
-      (drop (mod x collCount) (cycle coll)))))
+  (let [n (count coll)]
+    (take n (drop (mod x n) (cycle coll)))))
 
 ;; -----------------------------------------------------------------------------
 ;; Tests
