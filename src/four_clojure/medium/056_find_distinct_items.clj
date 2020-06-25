@@ -44,9 +44,7 @@
   (defn f
     "Remove duplicates from a sequence. Order is maintained"
     [coll]
-    (reduce #(if ((set %1) %2) %1 (conj %1 %2))
-            []
-            coll)))
+    (reduce #(if ((set %1) %2) %1 (conj %1 %2)) [] coll)))
 
 (defn f
   "Remove duplicates from a sequence. Order is maintained"
