@@ -14,19 +14,17 @@
 ;; -----------------------------------------------------------------------------
 
 
+
 (defn k-combinations
   [k coll]
   (cond
-    (zero? k)
-    #{#{}} ;; nested because map in #1
+    (zero? k) #{#{}} ;; nested because map in #1
 
-    (empty? coll)
-    #{}
+    (empty? coll) #{}
 
-    :else
-    (set (clojure.set/join
-           (map #(conj % (first coll)) (k-combinations (dec k)(rest coll))) ;;#1
-           (k-combinations k (rest coll)))))) ;;#2
+    :else (set (clojure.set/union
+                 (map #(conj % (first coll)) (k-combinations (dec k) (rest coll))) ;;#1
+                 (k-combinations k (rest coll)))))) ;;#2
 
 
 ;; NOTE
@@ -65,4 +63,4 @@
           (= (k-combinations 2 #{[1 2 3] :a "abc" "efg"})
              #{#{[1 2 3] :a} #{[1 2 3] "abc"} #{[1 2 3] "efg"}
                #{:a "abc"} #{:a "efg"} #{"abc" "efg"}}
-             ))
+             )))
