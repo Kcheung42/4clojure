@@ -13,24 +13,11 @@
 ;; Solutions
 ;; -----------------------------------------------------------------------------
 
-;; Initial
-
-
-(comment
-  (defn f
-    "Remove duplicates from a sequence. Order is maintained"
-    [coll]
-    (letfn [(step [[f s t :as xs] seen]
-              (when-let [s (seq xs)]
-                (if (contains? seen f)
-                  (recur (rest s) seen)
-                  (cons f (step (rest s) (conj seen f))))))]
-      (step coll #{}))))
 
 ;;Idiomatic?
 ;; Other solutions
 (comment
-  (defn f
+  (defn remove-dup-
     [coll]
     (reduce (fn [v x]
               (if ((set v) x) ;; what is the time complexity of (set v)?
@@ -41,18 +28,19 @@
 
 ;;Idiomatic?
 (comment
-  (defn f
+  (defn remove-dup-
     "Remove duplicates from a sequence. Order is maintained"
     [coll]
     (reduce #(if ((set %1) %2) %1 (conj %1 %2)) [] coll)))
 
-(defn f
+
+(defn remove-dup-
   "Remove duplicates from a sequence. Order is maintained"
   [coll]
-  (loop [[f & remain :as x] (seq coll)
+  (loop [[f & remain :as s] (seq coll)
          seen               #{}
          rslt               []]
-    (if (empty? x)
+    (if (not s)
       rslt
       (recur remain
              (conj seen f)
@@ -64,7 +52,7 @@
 
 (every? true?
         (vector
-          (= (f [1 2 1 3 1 2 4]) [1 2 3 4])
-          (= (f [:a :a :b :b :c :c]) [:a :b :c])
-          (= (f '([2 4] [1 2] [1 3] [1 3])) '([2 4] [1 2] [1 3]))
-          (= (f (range 50)) (range 50))))
+          (= (remove-dup- [1 2 1 3 1 2 4]) [1 2 3 4])
+          (= (remove-dup- [:a :a :b :b :c :c]) [:a :b :c])
+          (= (remove-dup- '([2 4] [1 2] [1 3] [1 3])) '([2 4] [1 2] [1 3]))
+          (= (remove-dup- (range 50)) (range 50))))
