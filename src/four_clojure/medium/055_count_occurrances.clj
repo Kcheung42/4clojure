@@ -14,30 +14,33 @@
 ;; Solutions
 ;; -----------------------------------------------------------------------------
 
-(defn f1
+(defn f
   [coll]
-  (when-let [s (seq coll)]
-    (reduce (fn [m x]
-              (if (contains? m x)
-                (assoc m x (inc (get m x)))
-                (assoc m x 1)))
-            {}
-            s)))
+  (reduce (fn [m x]
+            (if (contains? m x)
+              (assoc m x (inc (get m x)))
+              (assoc m x 1)))
+          {}
+          coll))
 
 (defn f
   [coll]
-  (when-let [s (seq coll)]
-    (reduce (fn [m x]
-              (assoc m x (inc (get m x 0))))
-            {}
-            s)))
+  (reduce (fn [counts x]
+            (assoc counts x (inc (get counts x 0))))
+          {}
+          coll))
 
-(defn
+(defn f
   [coll]
   (reduce (fn [m x]
             (update-in m [x] (fn [v] (inc (or v 0)))))
           {}
           coll))
+
+(defn f
+  [coll]
+  (reduce #(update-in %1 [%2] (fnil inc 0)) {} coll))
+
 
 ;; -----------------------------------------------------------------------------
 ;; Tests
